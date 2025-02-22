@@ -12,7 +12,7 @@ def sums_of_cubes(max_index):
                         valid_solutions.append([j,k,m,i])
     return valid_solutions
 
-with open("/Users/maximetschopp/Documents/University/FS 2025/Scientific Computing/1 Number and Text/output.csv", 'w') as file:
+with open("/Users/maximetschopp/Documents/University/FS 2025/Scientific Computing/ScientificComputing/1 Number and Text/output.csv", 'w') as file:
     file.truncate(0) # clear the file
     max_index = 300
     output = sums_of_cubes(max_index)

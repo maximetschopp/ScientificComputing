@@ -4,4 +4,4 @@ def fizzbuzz(start, stop):
         output += ( "fizz" * (i % 3 == 0) + "buzz" * (i % 5 == 0) or str(i) ) + ", "
     return output[:-2] # remove trailing comma and whitespace
     
-print(fizzbuzz(0,100))
+print(fizzbuzz(90,100))

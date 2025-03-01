@@ -7,7 +7,7 @@ from tqdm import tqdm # progress bar
 getcontext().prec = 1005
 
 def arctan(x, terms=5000):
-    x = Fraction(x)
+    x = Fraction(x) # in case x isnt a fraction, obv it is but if i make a dumb dumb
     T_k = x
     arctan_sum = T_k
 

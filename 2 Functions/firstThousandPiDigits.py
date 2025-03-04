@@ -30,3 +30,5 @@ pi_str = str(pi_decimal)[:1002]  # 1000 + 2 bc we need 1000 digits after decimal
 
 print("-" * 140)
 print(pi_str)
+print("-" * 140)
+print(pi_str[947:961])

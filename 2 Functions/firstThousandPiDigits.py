@@ -2,7 +2,6 @@ from fractions import Fraction
 from decimal import Decimal, getcontext
 from tqdm import tqdm # progress bar
 
-
 # Set precision to 1005 to ensure accuracy for 1000 digits
 getcontext().prec = 1005
 
@@ -28,7 +27,7 @@ pi_decimal = Decimal(pi_approx.numerator) / Decimal(pi_approx.denominator)
 # Get the first 1000 decimal places
 pi_str = str(pi_decimal)[:1002]  # 1000 + 2 bc we need 1000 digits after decimal point
 
-print("-" * 140)
-print(pi_str)
+# print("-" * 140)
+# print(pi_str)
 print("-" * 140)
 print(pi_str[947:961])

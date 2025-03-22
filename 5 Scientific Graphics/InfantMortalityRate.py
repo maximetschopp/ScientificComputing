@@ -66,20 +66,21 @@ with open ('/Users/maximetschopp/Documents/University/FS 2025/Scientific Computi
 
     # now plot with animation where we open and close the plot for every time step
     # and start with only plotting 1960, then 1960-1961, then 1960-1962, etc.
-    time_step = 40 # ms
+    first_time_step = 200 / 1000 # ms -> s
+    time_step = 40 / 1000 # ms -> s
     for (i, year) in enumerate(range(start, end)):
         plt.plot(range(start, year), continent_processed['North America'][:i], label='North America')
-        plt.plot(range(start, year), continent_processed['Asia'][:i], label='Asia')
-        plt.plot(range(start, year), continent_processed['Africa'][:i], label='Africa')
-        plt.plot(range(start, year), continent_processed['Europe'][:i], label='Europe')
-        plt.plot(range(start, year), continent_processed['South America'][:i], label='South America')
-        plt.plot(range(start, year), continent_processed['Oceania'][:i], label='Oceania')
+        plt.plot(range(start , year), continent_processed['Asia'][:i], label='Asia')
+        plt.plot(range(start , year), continent_processed['Africa'][:i], label='Africa')
+        plt.plot(range(start , year), continent_processed['Europe'][:i], label='Europe')
+        plt.plot(range(start , year), continent_processed['South America'][:i], label='South America')
+        plt.plot(range(start , year), continent_processed['Oceania'][:i ], label='Oceania')
         plt.legend()
         plt.title('Infant Mortality Rate by Continent from 1960-2023')
         plt.xlabel('Year')
         plt.ylabel('Infant Mortality Rate')
         plt.show(block=False)
-        plt.pause(time_step/1000)
+        plt.pause(first_time_step if i == 0 else time_step)
         plt.close()
 
     for key in continent_processed:

@@ -9,4 +9,4 @@ with open(path, 'r') as f:
             sorted_table[table[i][1]] = []
         sorted_table[ table[i][1] ].append(table[i][0])
 
-    print(sorted_table["Glycine"][2])
+    print(sorted_table)

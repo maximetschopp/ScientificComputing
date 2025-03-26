@@ -20,7 +20,7 @@ with open ('/Users/maximetschopp/Documents/University/FS 2025/Scientific Computi
         'Oceania': [ np.zeros(2023-1960), np.zeros(2023-1960) ]
     }
     # average infant mortality rate per continent for each year
-    start = 1960
+    start = 1970
     end = 2023
     continent_processed = {
         'North America': np.zeros(2023-1960),
@@ -81,6 +81,7 @@ with open ('/Users/maximetschopp/Documents/University/FS 2025/Scientific Computi
         plt.ylabel('Infant Mortality Rate')
         plt.show(block=False)
         plt.pause(first_time_step if i == 0 else time_step)
+        plt.savefig(f'./InfantMortalityRate_{year}.png')
         plt.close()
 
     for key in continent_processed:

@@ -1,10 +1,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Updated data
+# Data
 U_a = np.array([350, 400, 450, 500, 550, 420])  # Acceleration voltage
+dU_a = np.full_like(U_a, 5)  # Error in acceleration voltage
+
 B2 = np.array([3.29395E-05, 3.69422E-05, 4.1902E-05, 4.5382E-05, 4.92646E-05, 3.87948E-05])
-dB2 = np.array([5.80165E-10, 6.07636E-10, 6.41676E-10, 6.6556E-10, 6.92208E-10, 6.20351E-10])
+# New dB values
+dB = np.array([2.40866E-05, 2.46503E-05, 2.53313E-05, 2.57985E-05, 2.63098E-05, 2.49068E-05])
+# Propagate error: if B² = (B)², then d(B²) = 2 * B * dB
+dB2 = 2 * np.sqrt(B2) * dB
 
 # Weighted linear regression
 w = 1 / dB2**2
@@ -21,7 +26,7 @@ print(f"Slope: {slope:.3e} ± {slope_error:.2e}")
 print(f"Intercept: {intercept:.3e}")
 
 # Plot
-plt.errorbar(U_a, B2, yerr=dB2, fmt='o', label='Data with error bars', capsize=3)
+plt.errorbar(U_a, B2, xerr=dU_a, yerr=dB2, fmt='o', label='Data with error bars', capsize=3)
 plt.plot(U_a, slope * U_a + intercept, label='Linear Fit', color='orange')
 plt.xlabel('Acceleration Voltage $U_a$ (V)')
 plt.ylabel('$B^2$ [V²/m²]')

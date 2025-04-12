@@ -20,10 +20,13 @@ def solveCubeRoot():
     # find the closest term to the constant term as a starting point
     x = float(sorted(commonCubes, key=lambda cube: abs(cube - abs(f_x[3])))[0]) * np.sign(f_x[3])
     delta_X = 1
+    count = 0
     print(x)
     while abs(delta_X) > epsilon:
         x = x - f(x, f_x) / f(x, f_prime_x)
         delta_X = f(x, f_x)
+        count += 1
+    print("Iterations: ", count)
     return x
 
 print(solveCubeRoot())

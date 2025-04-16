@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-with open ('/Users/maximetschopp/Documents/University/FS 2025/Scientific Computing/ScientificComputing/5 Scientific Graphics/API_SH.DYN.MORT_DS2_en_csv_v2_76288.csv', 'r') as f:
+with open ('API_SH.DYN.MORT_DS2_en_csv_v2_76288.csv', 'r') as f:
     data = f.readlines()[4:]
 
     indices = data[0].split('","')

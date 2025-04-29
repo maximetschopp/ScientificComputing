@@ -42,6 +42,10 @@ def pendulumOnWheelLeapfrog(t_max, dt=0.005):
         # Step 1: update phi
         phi += phi_dot_half * d_tau
 
+        # Update time
+        t += dt / 2
+        tau += d_tau / 2
+
         # Step 2: compute acceleration
         phi_ddot = -gamma * np.sin(phi) - lam * np.sin(phi - tau)
 
@@ -49,8 +53,8 @@ def pendulumOnWheelLeapfrog(t_max, dt=0.005):
         phi_dot_half += phi_ddot * d_tau
 
         # Update time
-        t += dt
-        tau += d_tau
+        t += dt / 2
+        tau += d_tau / 2
 
     # Plotting the trajectory
     x_positions = [pos[0] for pos in positions]

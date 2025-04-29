@@ -35,8 +35,8 @@ def energy(R, V):
     return kin + pot
 
 acc = accelerations(R)
+V_full = V.copy()
 V_half = V + 0.5 * acc * dt
-V_full = V_half - 0.5 * acc * dt
 Es[0] = energy(R, V_full)
 
 for i in range(1, steps + 1):

@@ -1,56 +1,60 @@
 import numpy as np
 
-def create_grid(n):
-    N = n * n
-    G = np.zeros((N, N))
+def solve_lineqs_grounded(A, b, ground_index=0):
+    '''
+    Solves A @ x = b for x by grounding one node (removing row and column at ground_index).
+    A must be symmetric and singular (e.g., a Laplacian).
+    '''
+    A_reduced = np.delete(A, ground_index, axis=0)
+    A_reduced = np.delete(A_reduced, ground_index, axis=1)
+    b_reduced = np.delete(b, ground_index, axis=0)
 
-    for i in range(N):
-        row = i // n
-        col = i % n
+    x_reduced = np.linalg.solve(A_reduced, b_reduced)
 
-        G[i][i] = 4
+    # Insert 0V at grounded node
+    x = np.insert(x_reduced, ground_index, 0)
+    return x
 
-        # LEFT neighbor (wrap around if col == 0)
-        left = row * n + ((col - 1) % n)
-        G[i][left] = -1
+def is_neighbor(i, j, N):
+    # Check if nodes i and j are adjacent in a flat N x N grid
+    xi, yi = i % N, i // N
+    xj, yj = j % N, j // N
+    return abs(xi - xj) + abs(yi - yj) == 1
 
-        # RIGHT neighbor (wrap around if col == n-1)
-        right = row * n + ((col + 1) % n)
-        G[i][right] = -1
+def get_connections(i, N):
+    # Returns number of neighbors (between 2 and 4)
+    x, y = i % N, i // N
+    connections = 4
+    if x == 0 or x == N-1:
+        connections -= 1
+    if y == 0 or y == N-1:
+        connections -= 1
+    return connections
 
-        # UP neighbor (wrap around if row == 0)
-        up = ((row - 1) % n) * n + col
-        G[i][up] = -1
+def resistance(N):
+    size = N * N
+    A = np.zeros((size, size))
 
-        # DOWN neighbor (wrap around if row == n-1)
-        down = ((row + 1) % n) * n + col
-        G[i][down] = -1
+    # Build Laplacian
+    for i in range(size):
+        A[i, i] = get_connections(i, N)
+        for j in range(size):
+            if i != j and is_neighbor(i, j, N):
+                A[i, j] = -1
 
-    return G
+    # Inject current between two interior nodes
+    source_x, source_y = N // 2 + 1, N // 2
+    sink_x, sink_y = N // 2 - 1, N // 2 - 1
+    source = source_y * N + source_x
+    sink = sink_y * N + sink_x
 
-n = 50
-# Build full G and I
-G = create_grid(n)
-I = np.zeros(n * n)
-I[0] = 1
-I[-1] = -1
+    I = np.zeros((size, 1))
+    I[source] = 1
+    I[sink] = -1
 
-# Ground one node to make system solvable
-G_reduced = G[:-1, :-1]
-I_reduced = I[:-1]
+    V = solve_lineqs_grounded(A, I)
+    return float(V[source] - V[sink])
 
-# Solve
-V_reduced = np.linalg.solve(G_reduced, I_reduced)
-
-# Append grounded node
-V = np.append(V_reduced, 0)
-
-joined = ""
-
-for i, v in enumerate(V):
-    joined += str(round(v, 2)) + ", " if i < len(V) else ""
-print(joined)
-
-# Get equivalent resistance
-R = V[0] - V[-1]
-print("Equivalent resistance:", R)
+# Example usage
+for N in range(5, 60, 5):
+    print(f"N = {N}, Resistance ≈ {resistance(N):.5f}")

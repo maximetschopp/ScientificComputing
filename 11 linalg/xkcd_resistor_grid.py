@@ -15,7 +15,7 @@ def create_grid(n):
         G[i % n if i // n == n - 1 else i + n][i] = -1
     return G
 
-n = 5
+n = 50
 G = create_grid(n)
 
 I = np.zeros(n * n)
@@ -24,4 +24,4 @@ I[-1] = -1     # current sink
 
 V = np.linalg.solve(G, I)
 
-print(V)
+print(V[0] - V[-1])  # equivalent resistance

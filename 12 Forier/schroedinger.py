@@ -54,7 +54,7 @@ def animate_wavefunction(x, k, V, psi0, dt=0.01, steps=500, interval=20):
     ax2.set_title('Momentum-space probability density')
     ax2.legend()
 
-    def update():
+    def update(frame):
         nonlocal psi, psi_hat
         psi = leapfrog_step(psi, Vx, k, dt)
         psi_hat = np.fft.fft(psi)

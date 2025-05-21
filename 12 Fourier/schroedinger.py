@@ -70,7 +70,6 @@ def animate_wavefunction(x, k, V, psi0, dt=0.01, steps=500, interval=20):
     ani = animation.FuncAnimation(
         fig, update, frames=steps, interval=interval, blit=True
     )
-    plt.tight_layout()
     plt.show()
 
 if __name__ == '__main__':
